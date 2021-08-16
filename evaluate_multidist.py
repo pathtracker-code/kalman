@@ -10,13 +10,28 @@ files.sort(key=os.path.getmtime)
 print(files)
 
 perf = []
-for f in files:
+pos_correct = []
+neg_correct = []
+for vidx, f in enumerate(files):
     data = io.loadmat(f)
+    vidmat = io.loadmat(os.path.join("multi_mat", "vid_{}.mat".format(int(f.split("_")[-1].split(".")[0]))))
     perf.append(data["correct"])
+    label = vidmat["label"]
+    if label and data["correct"]:
+        pos_correct.append(1)
+    elif label and not data["correct"]:
+        pos_correct.append(0)
+    elif not label and not data["correct"]:
+        neg_correct.append(0)
+    elif not label and data["correct"]:
+        neg_correct.append(1)
+
 mean_acc = np.mean(perf)
 print("Per-video correctness")
 print(perf)
 print("Acc: {}".format(mean_acc))
+print("Pos: {}/{}".format(np.sum(pos_correct), len(pos_correct)))
+print("Neg: {}/{}".format(np.sum(neg_correct), len(neg_correct)))
 
 # Now plot
 for vidx in range(len(files)):
