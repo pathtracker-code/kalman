@@ -206,7 +206,7 @@ nan_idx = nF
 [start_dist, start_idx] = min((sx - Q_loc_estimateX(1, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(1, 1:nan_idx)) .^2);
 [end_dist, end_idx] = min((tx - Q_loc_estimateX(64, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(64, 1:nan_idx)) .^2);
 
-K = 7;
+K = 100;
 if end_dist < K
     guess = start_idx == end_idx;  % If our target track is right around the end-goal, make sure we're also closest.
 else
