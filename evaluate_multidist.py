@@ -3,6 +3,7 @@ from scipy import io
 from glob import glob
 import os
 from matplotlib import pyplot as plt
+from tqdm import tqdm
 
 
 files = glob(os.path.join("multi_dist_results", "*.mat"))
@@ -34,22 +35,22 @@ print("Pos: {}/{}".format(np.sum(pos_correct), len(pos_correct)))
 print("Neg: {}/{}".format(np.sum(neg_correct), len(neg_correct)))
 
 # Now plot
-for vidx in range(len(files)):
+for vidx in tqdm(range(len(files))):
     vidmat = io.loadmat(os.path.join("multi_mat", "vid_{}.mat".format(vidx)))
     video = vidmat["video"]
     data = io.loadmat(files[vidx])
     track_h = data["Q_loc_estimateY"]
     track_w = data["Q_loc_estimateX"]
 
-    # Plot the frame-by-frame
-    f = plt.figure()
-    for idx in range(len(video)):
-        plt.subplot(8, 8, idx + 1)
-        plt.axis("off")
-        plt.imshow(video[idx])
-    plt.savefig(os.path.join("multi_ex", "vid_frames_{}.pdf".format(vidx)))
-    # plt.show()
-    plt.close(f)
+    # # Plot the frame-by-frame
+    # f = plt.figure()
+    # for idx in range(len(video)):
+    #     plt.subplot(8, 8, idx + 1)
+    #     plt.axis("off")
+    #     plt.imshow(video[idx])
+    # plt.savefig(os.path.join("multi_ex", "vid_frames_{}.pdf".format(vidx)))
+    # # plt.show()
+    # plt.close(f)
 
     # Plot the summary
     f = plt.figure()
