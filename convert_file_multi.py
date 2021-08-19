@@ -31,6 +31,7 @@ for idx, d in enumerate(ds):
     ty = np.mean(ty)
 
     io.savemat(os.path.join("multi_mat", "vid_{}.mat".format(idx)), {"video": v, "xs": xs, "ys": ys, "tx": tx, "ty": ty, "sx": sx, "sy": sy, "label": labels[idx]})
+    np.savez(os.path.join("multi_npy", "vid_{}".format(idx)), **{"video": v, "xs": xs, "ys": ys, "tx": tx, "ty": ty, "sx": sx, "sy": sy, "label": labels[idx]})
     runfiles.append('matlab -nodisplay -r "multi_dist_fly_tracker_studentdave({}); exit"'.format(idx))
 
 # Create the run script

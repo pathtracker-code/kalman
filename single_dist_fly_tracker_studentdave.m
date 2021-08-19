@@ -204,7 +204,7 @@ end
 % nan_idx = find(isnan(sum(Q_loc_estimateX)), 1, 'first') - 1  % This penalizes for lost tracks? Let's use a fixed # of tracks
 nan_idx = nF
 [start_dist, start_idx] = min((sx - Q_loc_estimateX(1, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(1, 1:nan_idx)) .^2);
-[end_dist, end_idx] = min((tx - Q_loc_estimateX(64, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(64, 1:nan_idx)) .^2);
+[end_dist, end_idx] = min((tx - Q_loc_estimateX(64, 1:nan_idx)) .^2 + (ty - Q_loc_estimateY(64, 1:nan_idx)) .^2);
 
 K = 100;
 if end_dist < K

@@ -21,10 +21,10 @@ S_frame = 1;  % find(cellfun(@length, X)>11,1); %starting frame
 %number of estimates! this way seems more clear for a tutorial I think, but
 %there is probably a much more efficient way to do it.
 
-u = 0; % define acceleration magnitude to start
-HexAccel_noise_mag = 0.01; %process noise: the variability in how fast the Hexbug is speeding up (stdv of acceleration: meters/sec^2)
-tkn_x = .01;  %measurement noise in the horizontal direction (x axis).
-tkn_y = .01;  %measurement noise in the horizontal direction (y axis).
+u = 0.; % define acceleration magnitude to start
+HexAccel_noise_mag = 1.; %process noise: the variability in how fast the Hexbug is speeding up (stdv of acceleration: meters/sec^2)
+tkn_x = .1;  %measurement noise in the horizontal direction (x axis).
+tkn_y = .1;  %measurement noise in the horizontal direction (y axis).
 Ez = [tkn_x 0; 0 tkn_y];
 Ex = [dt^4/4 0 dt^3/2 0; ...
     0 dt^4/4 0 dt^3/2; ...
@@ -204,9 +204,9 @@ end
 % nan_idx = find(isnan(sum(Q_loc_estimateX)), 1, 'first') - 1  % This penalizes for lost tracks? Let's use a fixed # of tracks
 nan_idx = nF
 [start_dist, start_idx] = min((sx - Q_loc_estimateX(1, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(1, 1:nan_idx)) .^2);
-[end_dist, end_idx] = min((tx - Q_loc_estimateX(64, 1:nan_idx)) .^2 + (sy - Q_loc_estimateY(64, 1:nan_idx)) .^2);
+[end_dist, end_idx] = min((tx - Q_loc_estimateX(64, 1:nan_idx)) .^2 + (ty - Q_loc_estimateY(64, 1:nan_idx)) .^2);
 
-K = 100;
+K = 5;  % 100;
 if end_dist < K
     guess = start_idx == end_idx;  % If our target track is right around the end-goal, make sure we're also closest.
 else
