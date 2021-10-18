@@ -3,9 +3,12 @@ from scipy import io
 from glob import glob
 import os
 from scipy.spatial.distance import cdist
+import sys
 
 
-ds = glob(os.path.join("multi_dist", "*.npy"))
+path = sys.argv[1]
+# ds = glob(os.path.join("multi_dist", "*.npy"))
+ds = glob(path)
 
 labels = [int(x.split(os.path.sep)[-1].split("_")[0]) for x in ds]
 runfiles = []
